@@ -14,9 +14,12 @@ void bubble_sort(vector<T> &vec, function<bool(T, T)> comparator) {
         return;
     bool isSorted = true;
 
-    for(int i = 0; i < vec.size(); i++) {
-        for (int j = 0; j < vec.size() - i - 1; j++) {
-            if (comparator(vec[j], vec[j+1])) {
+    for(int i = 0; i < vec.size(); i++) 
+    {
+        for (int j = 0; j < vec.size() - i - 1; j++) 
+        {
+            if (comparator(vec[j], vec[j+1])) 
+            {
                 swap(vec[j], vec[j+1]);
                 isSorted = false;
             }
