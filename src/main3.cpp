@@ -11,15 +11,14 @@ mutex mu;
 
 void serve(queue<vector<int>> cust)
 {
-    lock_guard<mutex> lockGuard(mu);
-    cout << "Cashbox: " << this_thread::get_id() << " with " << cust.size() << " customers"
-    << endl;
     for (int i(1); !cust.empty(); i++)
     {
-        cout << "Checking " << i << " with " << cust.front().size() << " goods" << endl;
+        mu.lock();
+        cout << "Checking customer with " << cust.front().size() << " goods on cashbox " << this_thread::get_id() << endl;
+        mu.unlock();
         for (int j(0); j < cust.front().size(); j++)
         {
-            this_thread::sleep_for(chrono::milliseconds(200));
+            this_thread::sleep_for(chrono::milliseconds(400));
         }
         cust.pop();
     }
