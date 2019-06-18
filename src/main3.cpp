@@ -66,7 +66,7 @@ int main()
     for (int i = 0; i < custNum; i++)
     {
         customers.push( new Customer());
-        if ((customers.size() == 5) || (custNum - i < 5))
+        if ((customers.size() == 5) || (custNum - i == 1))
         {
             threads.push_back(new thread(serve, customers));
             while(!customers.empty())
