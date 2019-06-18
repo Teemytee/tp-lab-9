@@ -1,9 +1,10 @@
-#include <vector>
+#include <thread>
 #include <iostream>
-#include <algorithm>
-#include <iterator>
-#include <list>
-using namespace std;
+#include <queue>
+#include <mutex>
+#include <vector>
+#include <ctime>
+#include <random>
 
 int main(){
 
