@@ -14,7 +14,7 @@ void service(queue<vector<int>> customers)
     {
         mutex1.lock();
         cout << "Serving customer, which has " << customers.front().size() << " products"
-        << " by " << this_thread::get_id() << "thread"<<endl;
+             << " by " << this_thread::get_id() << "thread"<<endl;
         mutex1.unlock();
         for(int j(0);j <customers.front().size();j++ ){
             this_thread::sleep_for(chrono::seconds(2));
