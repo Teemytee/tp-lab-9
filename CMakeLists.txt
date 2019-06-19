@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.8)
 set(PROJECT_NAME task1) 
 project(${PROJECT_NAME})
 
-set(CMAKE_CXX_FLAGS "-g -Wall")
+set(CMAKE_CXX_FLAGS "-g -Wall -lpthread")
 
 # If you want your own include/ directory, set this, and then you can do
 # include_directories(${COMMON_INCLUDES}) in other CMakeLists.txt files.
@@ -18,16 +18,13 @@ include_directories(${COMMON_INCLUDES})
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cpp)
 
 
-set(SRC_FILES ${PROJECT_SOURCE_DIR}/src/task1.cpp
-              ${PROJECT_SOURCE_DIR}/src/task2.cpp
-              ${PROJECT_SOURCE_DIR}/src/task3.cpp)
+set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_CXX_STANDARD 11)
 
-add_library(task1_lib ${SRC_FILES})
-add_executable(task1 ${PROJECT_SOURCE_DIR}/src/main.cpp)
+add_executable(task1 ${PROJECT_SOURCE_DIR}/src/task1.cpp)
+add_executable(task2 ${PROJECT_SOURCE_DIR}/src/task2.cpp)
+add_executable(task3 ${PROJECT_SOURCE_DIR}/src/task3.cpp)
 
-target_link_libraries(task1 task1_lib)
 
 ################################
 # Testing
@@ -55,7 +52,7 @@ if (BUILD_TESTS)
   target_link_libraries(runUnitTests gtest gtest_main)
 
   # Extra linking for the project.
-  target_link_libraries(runUnitTests task1_lib)
+  target_link_libraries(runUnitTests task1_lib task2_lib task3_lib)
 
   # This is so you can do 'make test' to see all your tests run, instead of
   # manually running the executable runUnitTests to see those specific tests.
