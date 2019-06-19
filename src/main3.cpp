@@ -9,69 +9,69 @@ using namespace std;
 
 mutex mutObj;
 
-// ========== [Функция обслужить покупателей] ==========
+// ========== [Р¤СѓРЅРєС†РёСЏ РѕР±СЃР»СѓР¶РёС‚СЊ РїРѕРєСѓРїР°С‚РµР»РµР№] ==========
 void serveBuyers(queue<vector<int>> buyers_queue)
 {
-	lock_guard<mutex> lockGuard(mutObj);// блокируем выполнение других потоков
+	lock_guard<mutex> lockGuard(mutObj);// Р±Р»РѕРєРёСЂСѓРµРј РІС‹РїРѕР»РЅРµРЅРёРµ РґСЂСѓРіРёС… РїРѕС‚РѕРєРѕРІ
 
 	cout << "\nThere are " << buyers_queue.size() << " buyers at the cashbox No." << this_thread::get_id() << endl;
 	
-	short int counter = 1; // Счетчик покупателей
+	short int counter = 1; // РЎС‡РµС‚С‡РёРє РїРѕРєСѓРїР°С‚РµР»РµР№
 	int cashBoxSum = 0;
-	while (buyers_queue.empty() == false) // пока очередь из покупателей не пуста
+	while (buyers_queue.empty() == false) // РїРѕРєР° РѕС‡РµСЂРµРґСЊ РёР· РїРѕРєСѓРїР°С‚РµР»РµР№ РЅРµ РїСѓСЃС‚Р°
 	{
 		cout << "\tServing a " << counter << " customer. He got " << buyers_queue.front().size() << " products ";
 
 		int sum = 0;
 		for (int i = 0; i < buyers_queue.front().size(); i++)
 		{
-			sum += buyers_queue.front()[i]; // сумма покупки покупателя
+			sum += buyers_queue.front()[i]; // СЃСѓРјРјР° РїРѕРєСѓРїРєРё РїРѕРєСѓРїР°С‚РµР»СЏ
 		}
 		cout << "(total sum: " << sum << " rub)" << endl;
-		for (int j = 0; j < buyers_queue.front().size(); j++) // пройдемся по всем покупателям в очереди
+		for (int j = 0; j < buyers_queue.front().size(); j++) // РїСЂРѕР№РґРµРјСЃСЏ РїРѕ РІСЃРµРј РїРѕРєСѓРїР°С‚РµР»СЏРј РІ РѕС‡РµСЂРµРґРё
 		{
-			this_thread::sleep_for(chrono::milliseconds(10 + rand()% 100)); // имитация обслуживания (задержка)
+			this_thread::sleep_for(chrono::milliseconds(10 + rand()% 100)); // РёРјРёС‚Р°С†РёСЏ РѕР±СЃР»СѓР¶РёРІР°РЅРёСЏ (Р·Р°РґРµСЂР¶РєР°)
 		}
 		cashBoxSum += sum;
-		buyers_queue.pop(); // исключим покупателя из очереди (обслужили)
-		counter++; // увеличим счетчик
+		buyers_queue.pop(); // РёСЃРєР»СЋС‡РёРј РїРѕРєСѓРїР°С‚РµР»СЏ РёР· РѕС‡РµСЂРµРґРё (РѕР±СЃР»СѓР¶РёР»Рё)
+		counter++; // СѓРІРµР»РёС‡РёРј СЃС‡РµС‚С‡РёРє
 	}
 	cout << "=== [Total cashBox sum: " << cashBoxSum << " rub] ===" << endl;
 }
 
 int main()
 {
-	vector <int> products;	// вектор продуктов
-	vector <thread*> threads;	// вектор потоков
-	queue <vector<int>> buyers;	// вектор покупателей
+	vector <int> products;	// РІРµРєС‚РѕСЂ РїСЂРѕРґСѓРєС‚РѕРІ
+	vector <thread*> threads;	// РІРµРєС‚РѕСЂ РїРѕС‚РѕРєРѕРІ
+	queue <vector<int>> buyers;	// РІРµРєС‚РѕСЂ РїРѕРєСѓРїР°С‚РµР»РµР№
 
 	srand(time(0));
-	int buyers_number = rand() % 25; // количество покупателей
+	int buyers_number = rand() % 25; // РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРєСѓРїР°С‚РµР»РµР№
 
 	cout << "Buyers in market: " << buyers_number << endl;
 
-	int products_number; // количество продуктов
-	for (int i = 0; i < buyers_number; i++) // пройдемся по всем покупателям
+	int products_number; // РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕРґСѓРєС‚РѕРІ
+	for (int i = 0; i < buyers_number; i++) // РїСЂРѕР№РґРµРјСЃСЏ РїРѕ РІСЃРµРј РїРѕРєСѓРїР°С‚РµР»СЏРј
 	{
-		products_number = 1 + rand() % 10; // сгенерируем количество продуктов для покупателя
+		products_number = 1 + rand() % 10; // СЃРіРµРЅРµСЂРёСЂСѓРµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕРґСѓРєС‚РѕРІ РґР»СЏ РїРѕРєСѓРїР°С‚РµР»СЏ
 		
-		// сгенерируем цену для каждого продукта
+		// СЃРіРµРЅРµСЂРёСЂСѓРµРј С†РµРЅСѓ РґР»СЏ РєР°Р¶РґРѕРіРѕ РїСЂРѕРґСѓРєС‚Р°
 		while (products_number--)
 		{
 			int price = 1 + rand() % 150;
-			products.push_back(price); // поместим цену для соответствующего элемента в вектор продуктов
+			products.push_back(price); // РїРѕРјРµСЃС‚РёРј С†РµРЅСѓ РґР»СЏ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ СЌР»РµРјРµРЅС‚Р° РІ РІРµРєС‚РѕСЂ РїСЂРѕРґСѓРєС‚РѕРІ
 		}
 
-		buyers.push(products); // сохраним наши продукты для покупателя
-		products.clear(); // очистим "корзину продуктов"
+		buyers.push(products); // СЃРѕС…СЂР°РЅРёРј РЅР°С€Рё РїСЂРѕРґСѓРєС‚С‹ РґР»СЏ РїРѕРєСѓРїР°С‚РµР»СЏ
+		products.clear(); // РѕС‡РёСЃС‚РёРј "РєРѕСЂР·РёРЅСѓ РїСЂРѕРґСѓРєС‚РѕРІ"
 		
-		if ((i == buyers_number - 1) || (buyers.size() % 5 == 0)) // для каждого последнего или 5ого покупателя
+		if ((i == buyers_number - 1) || (buyers.size() % 5 == 0)) // РґР»СЏ РєР°Р¶РґРѕРіРѕ РїРѕСЃР»РµРґРЅРµРіРѕ РёР»Рё 5РѕРіРѕ РїРѕРєСѓРїР°С‚РµР»СЏ
 		{
-			threads.push_back(new thread(serveBuyers, buyers)); // запустим новый поток
-			while (buyers.empty() == false) buyers.pop(); // очистим вектор покупателей (чтобы не "копились")
+			threads.push_back(new thread(serveBuyers, buyers)); // Р·Р°РїСѓСЃС‚РёРј РЅРѕРІС‹Р№ РїРѕС‚РѕРє
+			while (buyers.empty() == false) buyers.pop(); // РѕС‡РёСЃС‚РёРј РІРµРєС‚РѕСЂ РїРѕРєСѓРїР°С‚РµР»РµР№ (С‡С‚РѕР±С‹ РЅРµ "РєРѕРїРёР»РёСЃСЊ")
 		}
 	}
-	for (auto & thread : threads) thread->join(); // дождемся завершения выполнения всех потоков
+	for (auto & thread : threads) thread->join(); // РґРѕР¶РґРµРјСЃСЏ Р·Р°РІРµСЂС€РµРЅРёСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РІСЃРµС… РїРѕС‚РѕРєРѕРІ
 
 	return 0;
 }

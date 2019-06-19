@@ -3,14 +3,14 @@
 
 using namespace std;
 
-// ========== [Функция вывода содержимого массива на экран] ==========
+// ========== [Р¤СѓРЅРєС†РёСЏ РІС‹РІРѕРґР° СЃРѕРґРµСЂР¶РёРјРѕРіРѕ РјР°СЃСЃРёРІР° РЅР° СЌРєСЂР°РЅ] ==========
 void printArr(string *arr, int arr_len)
 {
 	for (int i = 0; i < arr_len; i++) cout << arr[i] << " ";
 	cout << endl;
 }
 
-// ========== [Функция сортировки пузырьком] ==========
+// ========== [Р¤СѓРЅРєС†РёСЏ СЃРѕСЂС‚РёСЂРѕРІРєРё РїСѓР·С‹СЂСЊРєРѕРј] ==========
 void bSort(string *arr, int arr_len, bool func(string str1, string str2))
 {
 	for (int i = 0; i < arr_len; i++)
@@ -25,7 +25,7 @@ void bSort(string *arr, int arr_len, bool func(string str1, string str2))
 
 int main()
 {
-	const short int ARR_LEN = 6; // длина массива
+	const short int ARR_LEN = 6; // РґР»РёРЅР° РјР°СЃСЃРёРІР°
 	string arr[ARR_LEN] = { "One", "two", "three", "four", "five", "six" };
 
 	bSort(arr, ARR_LEN, [](string str1, string str2){ return str1[0] != str2[0]; });
